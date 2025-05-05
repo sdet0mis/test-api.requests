@@ -49,4 +49,4 @@
 
 1. Развернуть проект согласно инструкции
 2. Запустить тесты `pytest --alluredir=allure-results`
-3. Открыть отчет `pytest serve allure-results`
+3. Открыть отчет `allure serve allure-results`
