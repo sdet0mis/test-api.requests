@@ -15,7 +15,7 @@ class TestComments:
         db: DBConnector,
         posts_service: PostsService,
         comments_service: CommentsService
-    ) -> None:
+    ):
         created_post = posts_service.create_post()
         created_comment = comments_service.create_comment(
             created_post["model"].id
@@ -30,7 +30,7 @@ class TestComments:
         db: DBConnector,
         posts_service: PostsService,
         comments_service: CommentsService
-    ) -> None:
+    ):
         created_post = posts_service.create_post()
         created_comment = comments_service.create_comment(
             created_post["model"].id
@@ -48,7 +48,7 @@ class TestComments:
         db: DBConnector,
         posts_service: PostsService,
         comments_service: CommentsService
-    ) -> None:
+    ):
         created_post = posts_service.create_post()
         created_comment = comments_service.create_comment(
             created_post["model"].id

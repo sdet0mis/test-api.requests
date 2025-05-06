@@ -11,7 +11,7 @@ class TestUsers:
     @allure.title("Создание пользователя")
     def test_create_user(
         self, db: DBConnector, users_service: UsersService
-    ) -> None:
+    ):
         created_user = users_service.create_user()
         received_user = db.get_user_by_id(created_user["model"].id)
         assert created_user["payloads"]["username"] == received_user[0][0] \
@@ -21,7 +21,7 @@ class TestUsers:
     @allure.title("Изменение пользователя")
     def test_update_user(
         self, db: DBConnector, users_service: UsersService
-    ) -> None:
+    ):
         created_user = users_service.create_user()
         updated_user = users_service.update_user(created_user["model"].id)
         received_user = db.get_user_by_id(created_user["model"].id)
@@ -31,7 +31,7 @@ class TestUsers:
     @allure.title("Удаление пользователя")
     def test_delete_user(
         self, db: DBConnector, users_service: UsersService
-    ) -> None:
+    ):
         created_user = users_service.create_user()
         deleted_user = users_service.delete_user(created_user["model"].id)
         received_user = db.get_user_by_id(created_user["model"].id)
