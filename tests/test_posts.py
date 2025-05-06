@@ -8,7 +8,6 @@ from helpers.db import DBConnector
 @allure.feature("Статьи")
 @allure.severity(allure.severity_level.BLOCKER)
 class TestPosts:
-
     @allure.title("Создание статьи")
     def test_create_post(
         self, db: DBConnector, posts_service: PostsService

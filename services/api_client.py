@@ -12,7 +12,6 @@ load_dotenv()
 
 
 class ApiClient:
-
     def __init__(self) -> None:
         self.base_url = os.getenv("BASE_URL")
         self.credentials = os.getenv("USERNAME"), os.getenv("PASSWORD")

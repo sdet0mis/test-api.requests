@@ -10,7 +10,6 @@ from services.posts.models import PostModel, DeletedPostModel
 
 
 class PostsService(ApiClient):
-
     @allure.step("Создать статью")
     def create_post(
         self, expected_code: int = 201, **kwargs

@@ -9,7 +9,6 @@ from helpers.db import DBConnector
 @allure.feature("Комментарии")
 @allure.severity(allure.severity_level.BLOCKER)
 class TestComments:
-
     @allure.title("Создание комментария")
     def test_create_comment(
         self,

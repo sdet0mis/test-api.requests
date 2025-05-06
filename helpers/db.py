@@ -8,7 +8,6 @@ load_dotenv()
 
 
 class DBConnector():
-
     def __init__(self) -> None:
         self.connection = mysql.connector.connect(
             **json.loads(os.getenv("DB"))

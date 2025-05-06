@@ -10,7 +10,6 @@ from services.pages.models import PageModel, DeletedPageModel
 
 
 class PagesService(ApiClient):
-
     @allure.step("Создать страницу")
     def create_page(
         self, expected_code: int = 201, **kwargs

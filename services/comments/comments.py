@@ -12,7 +12,6 @@ from services.comments.payloads import (
 
 
 class CommentsService(ApiClient):
-
     @allure.step("Создать комментарий")
     def create_comment(
         self, post: int, expected_code: int = 201, **kwargs

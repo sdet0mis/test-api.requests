@@ -8,7 +8,6 @@ from helpers.db import DBConnector
 @allure.feature("Пользователи")
 @allure.severity(allure.severity_level.BLOCKER)
 class TestUsers:
-
     @allure.title("Создание пользователя")
     def test_create_user(
         self, db: DBConnector, users_service: UsersService

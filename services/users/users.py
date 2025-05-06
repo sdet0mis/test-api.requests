@@ -10,7 +10,6 @@ from services.users.models import UserModel, DeletedUserModel
 
 
 class UsersService(ApiClient):
-
     @allure.step("Создать пользователя")
     def create_user(
         self, expected_code: int = 201, **kwargs

@@ -3,7 +3,6 @@ from pydantic import BaseModel, ValidationError
 
 
 class Checkers:
-
     @staticmethod
     @allure.step("Проверить статус код {expected_code}")
     def check_status_code(expected_code: int, actual_code: int) -> None:

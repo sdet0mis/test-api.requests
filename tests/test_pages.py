@@ -8,7 +8,6 @@ from helpers.db import DBConnector
 @allure.feature("Страницы")
 @allure.severity(allure.severity_level.BLOCKER)
 class TestPages:
-
     @allure.title("Создание страницы")
     def test_create_page(
         self, db: DBConnector, pages_service: PagesService
