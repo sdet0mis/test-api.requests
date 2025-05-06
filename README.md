@@ -48,5 +48,10 @@
 ## Инструкция по запуску тестов
 
 1. Развернуть проект согласно инструкции
-2. Запустить тесты `pytest --alluredir=allure-results`
-3. Открыть отчет `allure serve allure-results`
+2. Клонировать репозиторий `git clone https://github.com/sdet0mis/ss-api.git`
+3. Перейти в директорию репозитория `cd ss-api`
+4. Создать виртуальное окружение `python -m venv .venv`
+5. Активировать виртуальное окружение `source .venv/bin/activate`
+6. Установить зависимости `pip install -r requirements.txt`
+7. Запустить тесты `pytest --alluredir=allure-results`
+8. Открыть отчет `allure serve allure-results`
