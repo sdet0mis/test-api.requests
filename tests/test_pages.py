@@ -1,6 +1,7 @@
 import allure
 
 from services.pages.pages import PagesService
+from services.pages.models import PageModel
 from helpers.db import DBConnector
 
 
@@ -19,19 +20,22 @@ class TestPages:
 
     @allure.title("Изменение страницы")
     def test_update_page(
-        self, db: DBConnector, pages_service: PagesService
+        self,
+        db: DBConnector,
+        pages_service: PagesService,
+        delete_page: PageModel
     ):
-        created_page = pages_service.create_page()
-        updated_page = pages_service.update_page(created_page["model"].id)
-        received_page = db.get_page_by_id(created_page["model"].id)
+        updated_page = pages_service.update_page(delete_page["model"].id)
+        received_page = db.get_page_by_id(delete_page["model"].id)
         assert updated_page["payloads"]["title"] == received_page[0][0]
-        pages_service.delete_page(created_page["model"].id)
 
     @allure.title("Удаление страницы")
     def test_delete_page(
-        self, db: DBConnector, pages_service: PagesService
+        self,
+        db: DBConnector,
+        pages_service: PagesService,
+        create_page: PageModel
     ):
-        created_page = pages_service.create_page()
-        deleted_page = pages_service.delete_page(created_page["model"].id)
-        received_page = db.get_page_by_id(created_page["model"].id)
+        deleted_page = pages_service.delete_page(create_page["model"].id)
+        received_page = db.get_page_by_id(create_page["model"].id)
         assert deleted_page.deleted is True and received_page == []

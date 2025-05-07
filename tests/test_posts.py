@@ -1,6 +1,7 @@
 import allure
 
 from services.posts.posts import PostsService
+from services.posts.models import PostModel
 from helpers.db import DBConnector
 
 
@@ -19,19 +20,22 @@ class TestPosts:
 
     @allure.title("Изменение статьи")
     def test_update_post(
-        self, db: DBConnector, posts_service: PostsService
+        self,
+        db: DBConnector,
+        posts_service: PostsService,
+        delete_post: PostModel
     ):
-        created_post = posts_service.create_post()
-        updated_post = posts_service.update_post(created_post["model"].id)
-        received_post = db.get_post_by_id(created_post["model"].id)
+        updated_post = posts_service.update_post(delete_post["model"].id)
+        received_post = db.get_post_by_id(delete_post["model"].id)
         assert updated_post["payloads"]["title"] == received_post[0][0]
-        posts_service.delete_post(created_post["model"].id)
 
     @allure.title("Удаление статьи")
     def test_delete_post(
-        self, db: DBConnector, posts_service: PostsService
+        self,
+        db: DBConnector,
+        posts_service: PostsService,
+        create_post: PostModel
     ):
-        created_post = posts_service.create_post()
-        deleted_post = posts_service.delete_post(created_post["model"].id)
-        received_post = db.get_post_by_id(created_post["model"].id)
+        deleted_post = posts_service.delete_post(create_post["model"].id)
+        received_post = db.get_post_by_id(create_post["model"].id)
         assert deleted_post.deleted is True and received_post == []
