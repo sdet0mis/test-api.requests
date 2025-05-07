@@ -14,9 +14,9 @@ class TestPages:
         self, db: DBConnector, pages_service: PagesService
     ):
         created_page = pages_service.create_page()
-        received_page = db.get_page_by_id(created_page["model"].id)
-        assert created_page["payloads"]["title"] == received_page[0][0]
-        pages_service.delete_page(created_page["model"].id)
+        received_page = db.get_page_by_id(created_page.model.id)
+        assert created_page.payloads.title == received_page[0][0]
+        pages_service.delete_page(created_page.model.id)
 
     @allure.title("Изменение страницы")
     def test_update_page(
@@ -25,9 +25,9 @@ class TestPages:
         pages_service: PagesService,
         delete_page: PageModel
     ):
-        updated_page = pages_service.update_page(delete_page["model"].id)
-        received_page = db.get_page_by_id(delete_page["model"].id)
-        assert updated_page["payloads"]["title"] == received_page[0][0]
+        updated_page = pages_service.update_page(delete_page.model.id)
+        received_page = db.get_page_by_id(delete_page.model.id)
+        assert updated_page.payloads.title == received_page[0][0]
 
     @allure.title("Удаление страницы")
     def test_delete_page(
@@ -36,6 +36,6 @@ class TestPages:
         pages_service: PagesService,
         create_page: PageModel
     ):
-        deleted_page = pages_service.delete_page(create_page["model"].id)
-        received_page = db.get_page_by_id(create_page["model"].id)
-        assert deleted_page.deleted is True and received_page == []
+        deleted_page = pages_service.delete_page(create_page.model.id)
+        received_page = db.get_page_by_id(create_page.model.id)
+        assert deleted_page.model.deleted is True and received_page == []

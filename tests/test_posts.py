@@ -14,9 +14,9 @@ class TestPosts:
         self, db: DBConnector, posts_service: PostsService
     ):
         created_post = posts_service.create_post()
-        received_post = db.get_post_by_id(created_post["model"].id)
-        assert created_post["payloads"]["title"] == received_post[0][0]
-        posts_service.delete_post(created_post["model"].id)
+        received_post = db.get_post_by_id(created_post.model.id)
+        assert created_post.payloads.title == received_post[0][0]
+        posts_service.delete_post(created_post.model.id)
 
     @allure.title("Изменение статьи")
     def test_update_post(
@@ -25,9 +25,9 @@ class TestPosts:
         posts_service: PostsService,
         delete_post: PostModel
     ):
-        updated_post = posts_service.update_post(delete_post["model"].id)
-        received_post = db.get_post_by_id(delete_post["model"].id)
-        assert updated_post["payloads"]["title"] == received_post[0][0]
+        updated_post = posts_service.update_post(delete_post.model.id)
+        received_post = db.get_post_by_id(delete_post.model.id)
+        assert updated_post.payloads.title == received_post[0][0]
 
     @allure.title("Удаление статьи")
     def test_delete_post(
@@ -36,6 +36,6 @@ class TestPosts:
         posts_service: PostsService,
         create_post: PostModel
     ):
-        deleted_post = posts_service.delete_post(create_post["model"].id)
-        received_post = db.get_post_by_id(create_post["model"].id)
-        assert deleted_post.deleted is True and received_post == []
+        deleted_post = posts_service.delete_post(create_post.model.id)
+        received_post = db.get_post_by_id(create_post.model.id)
+        assert deleted_post.model.deleted is True and received_post == []

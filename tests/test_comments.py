@@ -19,11 +19,11 @@ class TestComments:
     ):
         created_post = posts_service.create_post()
         created_comment = comments_service.create_comment(
-            created_post["model"].id
+            created_post.model.id
         )
-        received_comment = db.get_comment_by_id(created_comment["model"].id)
-        assert created_comment["payloads"]["content"] == received_comment[0][0]
-        posts_service.delete_post(created_post["model"].id)
+        received_comment = db.get_comment_by_id(created_comment.model.id)
+        assert created_comment.payloads.content == received_comment[0][0]
+        posts_service.delete_post(created_post.model.id)
 
     @allure.title("Изменение комментария")
     def test_update_comment(
@@ -33,10 +33,10 @@ class TestComments:
         delete_comment: CommentModel
     ):
         updated_comment = comments_service.update_comment(
-            delete_comment["model"].id
+            delete_comment.model.id
         )
-        received_comment = db.get_comment_by_id(delete_comment["model"].id)
-        assert updated_comment["payloads"]["content"] == received_comment[0][0]
+        received_comment = db.get_comment_by_id(delete_comment.model.id)
+        assert updated_comment.payloads.content == received_comment[0][0]
 
     @allure.title("Удаление комментария")
     def test_delete_comment(
@@ -46,7 +46,7 @@ class TestComments:
         create_comment: CommentModel
     ):
         deleted_comment = comments_service.delete_comment(
-            create_comment["model"].id
+            create_comment.model.id
         )
-        received_comment = db.get_comment_by_id(create_comment["model"].id)
-        assert deleted_comment.deleted is True and received_comment == []
+        received_comment = db.get_comment_by_id(create_comment.model.id)
+        assert deleted_comment.model.deleted is True and received_comment == []

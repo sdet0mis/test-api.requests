@@ -14,10 +14,10 @@ class TestUsers:
         self, db: DBConnector, users_service: UsersService
     ):
         created_user = users_service.create_user()
-        received_user = db.get_user_by_id(created_user["model"].id)
-        assert created_user["payloads"]["username"] == received_user[0][0] \
-            and created_user["payloads"]["email"] == received_user[0][1]
-        users_service.delete_user(created_user["model"].id)
+        received_user = db.get_user_by_id(created_user.model.id)
+        assert created_user.payloads.username == received_user[0][0] \
+            and created_user.payloads.email == received_user[0][1]
+        users_service.delete_user(created_user.model.id)
 
     @allure.title("Изменение пользователя")
     def test_update_user(
@@ -26,9 +26,9 @@ class TestUsers:
         users_service: UsersService,
         delete_user: UserModel
     ):
-        updated_user = users_service.update_user(delete_user["model"].id)
-        received_user = db.get_user_by_id(delete_user["model"].id)
-        assert updated_user["payloads"]["email"] == received_user[0][1]
+        updated_user = users_service.update_user(delete_user.model.id)
+        received_user = db.get_user_by_id(delete_user.model.id)
+        assert updated_user.payloads.email == received_user[0][1]
 
     @allure.title("Удаление пользователя")
     def test_delete_user(
@@ -37,6 +37,6 @@ class TestUsers:
         users_service: UsersService,
         create_user: UserModel
     ):
-        deleted_user = users_service.delete_user(create_user["model"].id)
-        received_user = db.get_user_by_id(create_user["model"].id)
-        assert deleted_user.deleted is True and received_user == []
+        deleted_user = users_service.delete_user(create_user.model.id)
+        received_user = db.get_user_by_id(create_user.model.id)
+        assert deleted_user.model.deleted is True and received_user == []

@@ -39,7 +39,7 @@ def delete_user(
     users_service: UsersService, create_user: UserModel
 ) -> Generator[UserModel]:
     yield create_user
-    users_service.delete_user(create_user["model"].id)
+    users_service.delete_user(create_user.model.id)
 
 
 # pages
@@ -61,7 +61,7 @@ def delete_page(
     pages_service: PagesService, create_page: PageModel
 ) -> Generator[PageModel]:
     yield create_page
-    pages_service.delete_page(create_page["model"].id)
+    pages_service.delete_page(create_page.model.id)
 
 
 # posts
@@ -83,7 +83,7 @@ def delete_post(
     posts_service: PostsService, create_post: PostModel
 ) -> Generator[PostModel]:
     yield create_post
-    posts_service.delete_post(create_post["model"].id)
+    posts_service.delete_post(create_post.model.id)
 
 
 # comments
@@ -99,7 +99,7 @@ def comments_service() -> CommentsService:
 def create_comment(
     comments_service: CommentsService, delete_post: PostModel
 ) -> CommentModel:
-    return comments_service.create_comment(delete_post["model"].id)
+    return comments_service.create_comment(delete_post.model.id)
 
 
 @pytest.fixture()
@@ -107,4 +107,4 @@ def delete_comment(
     comments_service: CommentsService, create_comment: CommentModel
 ) -> Generator[CommentModel]:
     yield create_comment
-    comments_service.delete_comment(create_comment["model"].id)
+    comments_service.delete_comment(create_comment.model.id)
