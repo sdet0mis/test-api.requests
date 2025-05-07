@@ -15,7 +15,10 @@ class TestPosts:
     ):
         created_post = posts_service.create_post()
         received_post = db.get_post_by_id(created_post.model.id)
-        assert created_post.payloads.title == received_post[0][0]
+        assert (
+            created_post.payloads.title == received_post[0][0]
+        ), f"Значения поля 'title' не совпадают, \
+            {created_post.payloads.title} != {received_post[0][0]}"
         posts_service.delete_post(created_post.model.id)
 
     @allure.title("Изменение статьи")
@@ -27,7 +30,10 @@ class TestPosts:
     ):
         updated_post = posts_service.update_post(delete_post.model.id)
         received_post = db.get_post_by_id(delete_post.model.id)
-        assert updated_post.payloads.title == received_post[0][0]
+        assert (
+            updated_post.payloads.title == received_post[0][0]
+        ), f"Значения поля 'title' не совпадают, \
+            {updated_post.payloads.title} != {received_post[0][0]}"
 
     @allure.title("Удаление статьи")
     def test_delete_post(
@@ -38,4 +44,6 @@ class TestPosts:
     ):
         deleted_post = posts_service.delete_post(create_post.model.id)
         received_post = db.get_post_by_id(create_post.model.id)
-        assert deleted_post.model.deleted is True and received_post == []
+        assert (
+            deleted_post.model.deleted is True and received_post == []
+        ), f"Статья не удалена, post = {received_post}"
