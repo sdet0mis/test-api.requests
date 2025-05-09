@@ -45,6 +45,9 @@ class ApiClient:
                 return ServiceDataModel(self.payloads, self.model)
             return ServiceDataModel(self.model)
 
+    def get(self, **kwargs: dict) -> Response:
+        return self.request("GET", **kwargs)
+
     def post(self, **kwargs: dict) -> Response:
         return self.request("POST", **kwargs)
 

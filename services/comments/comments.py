@@ -25,6 +25,17 @@ class CommentsService(ApiClient):
             model=CommentModel
         )
 
+    @allure.step("Получить комментарий")
+    def get_page(
+        self, сid: int, expected_code: int = 200, validate: bool = True
+    ) -> ServiceDataModel:
+        return self.get(
+            endpoint=f"/comments/{cid}",
+            expected_code=expected_code,
+            validate=validate,
+            model=CommentModel
+        )
+
     @allure.step("Изменить комментарий")
     def update_comment(
         self,

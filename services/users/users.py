@@ -22,6 +22,17 @@ class UsersService(ApiClient):
             model=UserModel
         )
 
+    @allure.step("Получить страницу")
+    def get_user(
+        self, uid: int, expected_code: int = 200, validate: bool = True
+    ) -> ServiceDataModel:
+        return self.get(
+            endpoint=f"/users/{uid}",
+            expected_code=expected_code,
+            validate=validate,
+            model=UserModel
+        )
+
     @allure.step("Изменить пользователя")
     def update_user(
         self,
