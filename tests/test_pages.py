@@ -1,4 +1,5 @@
 import allure
+from pydantic import BaseModel
 
 from services.pages.pages import PagesService
 from services.pages.models import PageModel
@@ -20,6 +21,20 @@ class TestPages:
         ), f"Значения поля 'title' не совпадают, \
             {created_page.payloads.title} != {received_page[0][0]}"
         pages_service.delete_page(created_page.model.id)
+
+    @allure.title("Получение страницы")
+    def test_get_page(
+        self,
+        create_page_by_db: BaseModel,
+        pages_service: PagesService
+    ):
+        received_page = pages_service.get_page(
+            create_page_by_db().id
+        )
+        assert (
+            create_page_by_db.title == received_page.model.title.rendered
+        ), f"Значения поля 'title' не совпадают, \
+            {create_page_by_db.title} != {received_page.model.title.rendered}"
 
     @allure.title("Изменение страницы")
     def test_update_page(

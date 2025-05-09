@@ -1,6 +1,7 @@
 from typing import Generator
 
 import pytest
+from pydantic import BaseModel
 
 from helpers.db import DBConnector
 from services.users.users import UsersService
@@ -42,6 +43,13 @@ def delete_user(
     users_service.delete_user(create_user.model.id)
 
 
+@pytest.fixture()
+def create_user_by_db(db: DBConnector) -> BaseModel:
+    user = db.create_user()
+    yield user
+    db.delete_user(user.id)
+
+
 # pages
 
 
@@ -62,6 +70,13 @@ def delete_page(
 ) -> Generator[PageModel]:
     yield create_page
     pages_service.delete_page(create_page.model.id)
+
+
+@pytest.fixture()
+def create_page_by_db(db: DBConnector) -> BaseModel:
+    page = db.create_page()
+    yield page
+    db.delete_page(page.id)
 
 
 # posts
@@ -86,6 +101,13 @@ def delete_post(
     posts_service.delete_post(create_post.model.id)
 
 
+@pytest.fixture()
+def create_post_by_db(db: DBConnector) -> BaseModel:
+    post = db.create_post()
+    yield post
+    db.delete_post(post.id)
+
+
 # comments
 
 
@@ -108,3 +130,10 @@ def delete_comment(
 ) -> Generator[CommentModel]:
     yield create_comment
     comments_service.delete_comment(create_comment.model.id)
+
+
+@pytest.fixture()
+def create_comment_by_db(db: DBConnector) -> BaseModel:
+    comment = db.create_comment()
+    yield comment
+    db.delete_comment(comment.id)

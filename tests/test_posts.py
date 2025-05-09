@@ -1,4 +1,5 @@
 import allure
+from pydantic import BaseModel
 
 from services.posts.posts import PostsService
 from services.posts.models import PostModel
@@ -20,6 +21,20 @@ class TestPosts:
         ), f"Значения поля 'title' не совпадают, \
             {created_post.payloads.title} != {received_post[0][0]}"
         posts_service.delete_post(created_post.model.id)
+
+    @allure.title("Получение статьи")
+    def test_get_post(
+        self,
+        create_post_by_db: BaseModel,
+        posts_service: PostsService
+    ):
+        received_post = posts_service.get_post(
+            create_post_by_db().id
+        )
+        assert (
+            create_post_by_db.title == received_post.model.title.rendered
+        ), f"Значения поля 'title' не совпадают, \
+            {create_post_by_db.title} != {received_post.model.title.rendered}"
 
     @allure.title("Изменение статьи")
     def test_update_post(

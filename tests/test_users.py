@@ -1,4 +1,5 @@
 import allure
+from pydantic import BaseModel
 
 from services.users.users import UsersService
 from services.users.models import UserModel
@@ -24,6 +25,16 @@ class TestUsers:
         ), f"Значения поля 'email' не совпадают, \
             {created_user.payloads.email} != {received_user[0][1]}"
         users_service.delete_user(created_user.model.id)
+
+    @allure.title("Получение пользователя")
+    def test_get_user(
+        self, create_user_by_db: BaseModel, users_service: UsersService
+    ):
+        received_user = users_service.get_user(create_user_by_db().id)
+        assert (
+            create_user_by_db.username == received_user.model.name
+        ), f"Значения поля 'name' не совпадают, \
+            {create_user_by_db.username} != {received_user.model.name}"
 
     @allure.title("Изменение пользователя")
     def test_update_user(

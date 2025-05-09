@@ -1,4 +1,5 @@
 import allure
+from pydantic import BaseModel
 
 from services.posts.posts import PostsService
 from services.comments.comments import CommentsService
@@ -27,6 +28,21 @@ class TestComments:
         ), f"Значения поля 'content' не совпадают, \
             {created_comment.payloads.content} != {received_comment[0][0]}"
         posts_service.delete_post(created_post.model.id)
+
+    @allure.title("Получение комментария")
+    def test_get_comment(
+        self,
+        create_comment_by_db: BaseModel,
+        comments_service: CommentsService
+    ):
+        received_comment = comments_service.get_comment(
+            create_comment_by_db().id
+        )
+        content = received_comment.model.content.rendered[3:-5]
+        assert (
+            create_comment_by_db.content == content
+        ), f"Значения поля 'content' не совпадают, \
+            {create_comment_by_db.content} != {content}"
 
     @allure.title("Изменение комментария")
     def test_update_comment(

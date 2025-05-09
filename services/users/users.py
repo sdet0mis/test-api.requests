@@ -22,7 +22,7 @@ class UsersService(ApiClient):
             model=UserModel
         )
 
-    @allure.step("Получить страницу")
+    @allure.step("Получить пользователя")
     def get_user(
         self, uid: int, expected_code: int = 200, validate: bool = True
     ) -> ServiceDataModel:

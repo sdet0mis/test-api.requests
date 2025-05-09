@@ -19,6 +19,7 @@ class ApiClient:
         self.base_url = os.getenv("BASE_URL")
         self.credentials = os.getenv("USERNAME"), os.getenv("PASSWORD")
         self.response = None
+        self.payloads = None
 
     def request(
         self,
@@ -34,7 +35,7 @@ class ApiClient:
             method=method,
             url=self.url,
             auth=HTTPBasicAuth(*self.credentials),
-            json=asdict(self.payloads),
+            json=asdict(self.payloads) if self.payloads else None,
             **kwargs
         )
         Allure.attach_response_body(self.response)
@@ -42,7 +43,7 @@ class ApiClient:
         if validate:
             self.model = Checkers.validate(model, self.response.json())
             if self.payloads:
-                return ServiceDataModel(self.payloads, self.model)
+                return ServiceDataModel(self.model, self.payloads)
             return ServiceDataModel(self.model)
 
     def get(self, **kwargs: dict) -> Response:
