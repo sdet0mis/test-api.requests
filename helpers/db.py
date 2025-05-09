@@ -5,6 +5,11 @@ from datetime import datetime
 import mysql.connector
 from dotenv import load_dotenv
 
+from services.users.payloads import CreateUserPayloads
+from services.pages.payloads import PagePayloads
+from services.posts.payloads import PostPayloads
+from services.comments.payloads import CreateCommentPayloads
+
 load_dotenv()
 
 
@@ -29,8 +34,9 @@ class DBConnector():
         )[0][0]
         return max_id + 1
 
-    def create_user(self, username: str) -> int:
+    def create_user(self, **kwargs: dict) -> int:
         uid = self.__get_new_id("wp_users")
+        username = CreateUserPayloads(**kwargs).username
         dt = datetime.now()
         self.db_request(
             (
@@ -53,8 +59,9 @@ class DBConnector():
             ("""DELETE FROM wp_users WHERE id = %s""", [uid])
         )
 
-    def create_page(self, title: str) -> int:
+    def create_page(self, **kwargs: dict) -> int:
         pid = self.__get_new_id("wp_posts")
+        title = PagePayloads(**kwargs).title
         dt = datetime.now()
         self.db_request(
             (
@@ -78,8 +85,9 @@ class DBConnector():
             ("""DELETE FROM wp_posts WHERE id = %s""", [pid])
         )
 
-    def create_post(self, title: str) -> int:
+    def create_post(self, **kwargs: dict) -> int:
         pid = self.__get_new_id("wp_posts")
+        title = PostPayloads(**kwargs).title
         dt = datetime.now()
         self.db_request(
             (
@@ -103,8 +111,9 @@ class DBConnector():
             ("""DELETE FROM wp_posts WHERE id = %s""", [pid])
         )
 
-    def create_comment(self, content: str) -> int:
+    def create_comment(self, **kwargs: dict) -> int:
         cid = self.__get_new_id("wp_comments", "comment_id")
+        content = CreateCommentPayloads(**kwargs).content
         dt = datetime.now()
         self.db_request(
             (
