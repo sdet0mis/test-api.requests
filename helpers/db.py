@@ -48,6 +48,11 @@ class DBConnector():
             )
         )
 
+    def delete_user(self, uid: int) -> None:
+        self.db_request(
+            ("""DELETE FROM wp_users WHERE id = %s""", [uid])
+        )
+
     def create_page(self, title: str) -> int:
         pid = self.__get_new_id("wp_posts")
         dt = datetime.now()
@@ -66,6 +71,11 @@ class DBConnector():
     def get_page_by_id(self, pid: int) -> list:
         return self.db_request(
             ("""SELECT post_title FROM wp_posts WHERE id = %s""", [pid])
+        )
+
+    def delete_page(self, pid: int) -> None:
+        self.db_request(
+            ("""DELETE FROM wp_posts WHERE id = %s""", [pid])
         )
 
     def create_post(self, title: str) -> int:
@@ -88,6 +98,11 @@ class DBConnector():
             ("""SELECT post_title FROM wp_posts WHERE id = %s""", [pid])
         )
 
+    def delete_post(self, pid: int) -> None:
+        self.db_request(
+            ("""DELETE FROM wp_posts WHERE id = %s""", [pid])
+        )
+
     def create_comment(self, content: str) -> int:
         cid = self.__get_new_id("wp_comments", "comment_id")
         dt = datetime.now()
@@ -107,6 +122,11 @@ class DBConnector():
                 """SELECT comment_content, comment_post_ID FROM wp_comments \
                     WHERE comment_ID = %s""", [cid]
             )
+        )
+
+    def delete_comment(self, cid: int) -> None:
+        self.db_request(
+            ("""DELETE FROM wp_comments WHERE comment_id = %s""", [cid])
         )
 
     def disconnect(self) -> None:
