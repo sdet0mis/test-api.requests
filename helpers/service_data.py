@@ -6,5 +6,5 @@ from pydantic import BaseModel
 
 @dataclass
 class ServiceDataModel:
-    payloads: Optional[BaseModel]
     model: BaseModel
+    payloads: Optional[BaseModel] = None

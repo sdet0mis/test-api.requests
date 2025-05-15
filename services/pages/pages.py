@@ -19,6 +19,17 @@ class PagesService(ApiClient):
             model=PageModel
         )
 
+    @allure.step("Получить страницу")
+    def get_page(
+        self, pid: int, expected_code: int = 200, validate: bool = True
+    ) -> ServiceDataModel:
+        return self.get(
+            endpoint=f"/pages/{pid}",
+            expected_code=expected_code,
+            validate=validate,
+            model=PageModel
+        )
+
     @allure.step("Изменить страницу")
     def update_page(
         self,

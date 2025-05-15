@@ -37,23 +37,23 @@ class LinksModel(BaseModel):
 
 class UserModel(BaseModel):
     id: int
-    username: str
+    username: Optional[str] = None
     name: str
-    first_name: str
-    last_name: str
-    email: EmailStr
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    email: Optional[EmailStr] = None
     url: str
     description: str
     link: HttpUrl
-    locale: str
-    nickname: str
+    locale: Optional[str] = None
+    nickname: Optional[str] = None
     slug: str
-    roles: List[str]
-    registered_date: str
-    capabilities: CapabilitiesModel
-    extra_capabilities: ExtraCapabilitiesModel
+    roles: Optional[List[str]] = None
+    registered_date: Optional[str] = None
+    capabilities: Optional[CapabilitiesModel] = None
+    extra_capabilities: Optional[ExtraCapabilitiesModel] = None
     avatar_urls: AvatarUrlsModel
-    meta: MetaModel
+    meta: MetaModel | List
     _links: LinksModel
 
 

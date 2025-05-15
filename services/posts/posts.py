@@ -22,6 +22,17 @@ class PostsService(ApiClient):
             model=PostModel
         )
 
+    @allure.step("Получить статью")
+    def get_post(
+        self, pid: int, expected_code: int = 200, validate: bool = True
+    ) -> ServiceDataModel:
+        return self.get(
+            endpoint=f"/posts/{pid}",
+            expected_code=expected_code,
+            validate=validate,
+            model=PostModel
+        )
+
     @allure.step("Изменить статью")
     def update_post(
         self,

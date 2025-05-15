@@ -28,11 +28,11 @@ class CommentModel(BaseModel):
     parent: int
     author: int
     author_name: str
-    author_url: HttpUrl
+    author_url: HttpUrl | str
     date: str
     date_gmt: str
     content: ContentModel
-    link: HttpUrl
+    link: HttpUrl | str
     status: str
     type: str
     author_avatar_urls: AuthorAvatarUrlsModel
