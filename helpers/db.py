@@ -22,7 +22,7 @@ class DBConnector():
         )
         assert self.connection.is_connected(), "Соединение с БД не установлено"
 
-    def db_request(self, query: tuple[str, list | None]) -> list:
+    def db_request(self, query: tuple[str, list | None]) -> list | None:
         self.cursor = self.connection.cursor()
         self.cursor.execute(*query)
         data = self.cursor.fetchall()
@@ -37,7 +37,7 @@ class DBConnector():
         return max_id + 1
 
     @allure.step("Создать пользователя")
-    def create_user(self, **kwargs: dict) -> int:
+    def create_user(self, **kwargs: dict) -> any:
         uid = self.__get_new_id("wp_users")
         username = CreateUserPayloads(**kwargs).username
         dt = datetime.now()
@@ -72,7 +72,7 @@ class DBConnector():
         )
 
     @allure.step("Создать страницу")
-    def create_page(self, **kwargs: dict) -> int:
+    def create_page(self, **kwargs: dict) -> any:
         pid = self.__get_new_id("wp_posts")
         title = PagePayloads(**kwargs).title
         dt = datetime.now()
@@ -107,7 +107,7 @@ class DBConnector():
         )
 
     @allure.step("Создать статью")
-    def create_post(self, **kwargs: dict) -> int:
+    def create_post(self, **kwargs: dict) -> any:
         pid = self.__get_new_id("wp_posts")
         title = PostPayloads(**kwargs).title
         dt = datetime.now()
@@ -142,7 +142,7 @@ class DBConnector():
         )
 
     @allure.step("Создать комментарий")
-    def create_comment(self, **kwargs: dict) -> int:
+    def create_comment(self, **kwargs: dict) -> any:
         cid = self.__get_new_id("wp_comments", "comment_id")
         content = CreateCommentPayloads(**kwargs).content
         dt = datetime.now()

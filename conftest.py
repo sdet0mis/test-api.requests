@@ -39,13 +39,13 @@ def create_comment(
 @pytest.fixture()
 def delete_comment(
     comments_service: CommentsService, create_comment: CommentModel
-) -> Generator[CommentModel]:
+) -> Generator[CommentModel, None, None]:
     yield create_comment
     comments_service.delete_comment(create_comment.model.id)
 
 
 @pytest.fixture()
-def create_comment_by_db(db: DBConnector) -> BaseModel:
+def create_comment_by_db(db: DBConnector) -> Generator[BaseModel, None, None]:
     comment = db.create_comment()
     yield comment
     db.delete_comment(comment.id)
@@ -67,13 +67,13 @@ def create_page(pages_service: PagesService) -> PageModel:
 @pytest.fixture()
 def delete_page(
     pages_service: PagesService, create_page: PageModel
-) -> Generator[PageModel]:
+) -> Generator[PageModel, None, None]:
     yield create_page
     pages_service.delete_page(create_page.model.id)
 
 
 @pytest.fixture()
-def create_page_by_db(db: DBConnector) -> BaseModel:
+def create_page_by_db(db: DBConnector) -> Generator[BaseModel, None, None]:
     page = db.create_page()
     yield page
     db.delete_page(page.id)
@@ -95,13 +95,13 @@ def create_post(posts_service: PostsService) -> PostModel:
 @pytest.fixture()
 def delete_post(
     posts_service: PostsService, create_post: PostModel
-) -> Generator[PostModel]:
+) -> Generator[PostModel, None, None]:
     yield create_post
     posts_service.delete_post(create_post.model.id)
 
 
 @pytest.fixture()
-def create_post_by_db(db: DBConnector) -> BaseModel:
+def create_post_by_db(db: DBConnector) -> Generator[BaseModel, None, None]:
     post = db.create_post()
     yield post
     db.delete_post(post.id)
@@ -123,13 +123,13 @@ def create_user(users_service: UsersService) -> UserModel:
 @pytest.fixture()
 def delete_user(
     users_service: UsersService, create_user: UserModel
-) -> Generator[UserModel]:
+) -> Generator[UserModel, None, None]:
     yield create_user
     users_service.delete_user(create_user.model.id)
 
 
 @pytest.fixture()
-def create_user_by_db(db: DBConnector) -> BaseModel:
+def create_user_by_db(db: DBConnector) -> Generator[BaseModel, None, None]:
     user = db.create_user()
     yield user
     db.delete_user(user.id)
